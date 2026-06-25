@@ -1,6 +1,7 @@
+# .streamlit/config.toml
 [theme]
-primaryColor = "#FF4B4B"
-backgroundColor = "#0E1117"
-secondaryBackgroundColor = "#262730"
-textColor = "#FAFAFA"
-font = "sans serif"
+base = "light"
+primaryColor = "#1E40AF"          # Azul corporativo
+backgroundColor = "#F8FAFC"       # Blanco de fondo principal
+secondaryBackgroundColor = "#F1F5F9" # Gris claro limpio para Sidebar y submenús
+textColor = "#0F172A"             # Azul oscuro/Negro para que todo el texto contraste
