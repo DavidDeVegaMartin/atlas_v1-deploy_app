@@ -11,14 +11,12 @@ class GitHubModuleFinder:
         self.headers = {"Authorization": f"token {self.token}"}
 
     def find_spec(self, fullname, path, target=None):
-        # Si alguien intenta importar algo que empiece por 'utils.', entramos en acción
         if fullname.startswith("utils."):
             from importlib.machinery import ModuleSpec
             return ModuleSpec(fullname, self)
         return None
 
     def create_module(self, spec):
-        # Retorna None para que Python cree el objeto de módulo estándar
         return None
 
     def exec_module(self, module):
@@ -30,6 +28,11 @@ class GitHubModuleFinder:
         respuesta = requests.get(url, headers=self.headers)
         
         if respuesta.status_code == 200:
+            # --- SOLUCIÓN AL NAMEERROR ---
+            # Le asignamos una ruta falsa/virtual idéntica a la que esperaría Python
+            # para que cualquier llamada a __file__ no rompa el código interno.
+            module.__dict__["__file__"] = f"/mount/src/atlas_v1-deploy_app/utils/{submodule_name}.py"
+            
             # Ejecutamos el código privado dentro del contexto del nuevo módulo
             exec(respuesta.text, module.__dict__)
         else:
